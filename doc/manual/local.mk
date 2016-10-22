@@ -28,7 +28,7 @@ $(d)/version.txt:
 $(d)/manual.is-valid: $(d)/manual.xmli
 	$(trace-gen) $(XSLTPROC) --novalid --stringparam profile.condition manual \
 	  $(docbookxsl)/profiling/profile.xsl $< 2> /dev/null | \
-	  $(xmllint) --nonet --noout --relaxng $(docbookrng) -
+	  $(xmllint) --noout --relaxng $(docbookrng) -
 	@touch $@
 
 clean-files += $(d)/manual.xmli $(d)/version.txt $(d)/manual.is-valid
