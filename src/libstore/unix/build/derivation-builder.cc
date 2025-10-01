@@ -981,7 +981,14 @@ void DerivationBuilderImpl::initEnv()
     /* Most shells initialise PATH to some default (/bin:/usr/bin:...) when
        PATH is not set.  We don't want this, so we fill it in with some dummy
        value. */
-    env["PATH"] = "/path-not-set";
+    env["PATH"] =
+#ifdef __CYGWIN__
+        // on cygwin we always need /bin in PATH, so cygwin1.dll can be found
+        "/bin"
+#else
+        "/path-not-set"
+#endif
+        ;
 
     /* Set HOME to a non-existing path to prevent certain programs from using
        /etc/passwd (or NIS, or whatever) to locate the home directory (for
